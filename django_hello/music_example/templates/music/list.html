@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +7,9 @@
         rel="stylesheet" media="screen">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <title>음악 목록</title>
 </head>
 <body>
 <div class="container">
@@ -27,13 +31,15 @@
       </tr>
     </thead>
     <tbody>
-        <tr data-url="edit?id=${ student.id }">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+      {% for music in musics %}
+        <tr data-url="/music/edit?id={{ music.id }}">
+          <td>{{ music.id }}</td>
+          <td>{{ music.title }}</td>
+          <td>{{ music.singer }}</td>
+          <td>{{ music.genre.name }}</td>
+          <td>{{ music.year }}</td>
         </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
