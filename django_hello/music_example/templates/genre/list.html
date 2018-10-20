@@ -9,14 +9,16 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="{% static 'js/common.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/common.css' %}">
-  <title>음악 목록</title>
+  <title>장르 목록</title>
 </head>
 <body>
 <div class="container">
-  <h1>음악 목록</h1>
+  <h1>장르 목록</h1>
   <div class="text-right mb5">
-    <a href="/music/create" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> 음악 등록</a>
-    <a href="/music/genre/list" class="btn btn-info"><i class="glyphicon glyphicon-film"></i> 장르 목록으로</a>
+    <a href="/music/genre/create" class="btn btn-info">
+      <span class="glyphicon glyphicon-plus"></span> 장르 등록
+    </a>
+    <a href="/music/list" class="btn btn-info"><i class="glyphicon glyphicon-music"></i> 음악 목록으로</a>
     <a href="/music" class="btn btn-warning"><i class="glyphicon glyphicon-home"></i> 맨 처음으로</a>
   </div>
   <hr/>    
@@ -24,20 +26,14 @@
     <thead>
       <tr>
         <th>No.</th>
-        <th>제목</th>
-        <th>가수</th>
-        <th>장르</th>
-        <th>발매년도</th>
+        <th>이름</th>
       </tr>
     </thead>
     <tbody>
-      {% for music in musics %}
-        <tr data-url="/music/edit?id={{ music.id }}">
-          <td>{{ music.id }}</td>
-          <td>{{ music.title }}</td>
-          <td>{{ music.singer }}</td>
-          <td>{{ music.genre.name }}</td>
-          <td>{{ music.year }}</td>
+      {% for genre in genres %}
+        <tr data-url="/music/genre/edit/{{genre.id}}">
+          <td>{{ genre.id }}</td>
+          <td>{{ genre.name }}</td>
         </tr>
       {% endfor %}
     </tbody>

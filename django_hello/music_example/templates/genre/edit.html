@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <title>장르 {{ message }}</title>
+</head>
+<body>
+<div class="container">
+  <h1>장르 {{ message }}</h1>
+  <hr />
+  <div id="form_area">
+    <form method="post"> {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+            <label class="mylabel">{{ field.label }}</label>
+            {{ field }}
+        </div>
+      {% endfor %}
+      <hr />
+      <div>
+        <button type="submit" class="btn btn-primary">
+          <span class="glyphicon glyphicon-ok"></span> 저장</button>
+        {% if message == '수정' %}
+          <a href="/music/genre/delete/{{id}}" class="btn btn-danger" data-confirm-delete>
+            <i class="glyphicon glyphicon-remove"></i> 삭제</a>
+        {% endif %}
+        <a href="/music/genre/list" class="btn btn-info"><i class="glyphicon glyphicon-film"></i> 장르 목록으로</a>
+      </div>
+    </form>
+    <hr/>
+    {% if message == '수정' %}
+        <table class="table table-bordered mt5">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>제목</th>
+                <th>가수</th>
+                <th>발매년도</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if musics|length > 0 %}
+                {% for music in musics %}
+                <tr data-url="/music/edit?id={{ music.id }}">
+                    <td>{{ music.id }}</td>
+                    <td>{{ music.title }}</td>
+                    <td>{{ music.singer }}</td>
+                    <td>{{ music.year }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">등록한 음악 목록이 없습니다.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>
