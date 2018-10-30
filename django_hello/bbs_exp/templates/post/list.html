@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        rel="stylesheet" media="screen">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <title>게시글 목록</title>
+</head>
+<body>
+<div class="container">
+  <h1>게시글 목록</h1>
+  <div class="text-right mb5">
+    <a href="/post/create" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> 게시글 등록</a>
+    <a href="/post" class="btn btn-warning"><i class="glyphicon glyphicon-home"></i> 맨 처음으로</a>
+  </div>
+  <hr/>    
+  <table class="table table-bordered mt5">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>제목</th>
+        <th>종류</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+        <tr data-url="/post/view?id={{ post.id }}">
+          <td>{{ post.id }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.type.name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

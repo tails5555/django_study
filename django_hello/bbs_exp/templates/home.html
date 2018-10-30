@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BBS Index</title>
+</head>
+<body>
+    <div class="container">
+        <h1>django 2nd Project - Simple BBS Implement</h1>
+        <hr/>
+        <a href="/post/list">게시판 목록으로</a><br/>
+        <a href="/type/list">메뉴 목록으로</a><br/>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        rel="stylesheet" media="screen">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <title>게시글 {{ message }}</title>
+</head>
+<body>
+<div class="container">
+  <h1>게시글 {{ message }}</h1>
+  <hr />
+  <div id="form_area">
+    <form method="post"> {% csrf_token %}
+      {% for field in post_form %}
+        <div class="form-group">
+            <label class="mylabel">{{ field.label }}</label>
+            {{ field }}
+        </div>
+      {% endfor %}
+      {% for field in wysiwyg_form %}
+        <div class="form-group">
+            <label class="mylabel">{{ field.label }}</label>
+            {{ field }}
+        </div>
+      {% endfor %}
+      <hr />
+      <div>
+        <button type="submit" class="btn btn-primary">
+          <span class="glyphicon glyphicon-ok"></span> 저장</button>
+        {% if message == '수정' %}
+          <a href="/post/delete?id={{id}}" class="btn btn-danger" data-confirm-delete>
+            <i class="glyphicon glyphicon-remove"></i> 삭제</a>
+        {% endif %}
+        <a href="/post/list" class="btn btn-info"><i class="glyphicon glyphicon-arrow-left"></i> 게시글 목록으로</a>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

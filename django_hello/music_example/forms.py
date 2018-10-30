@@ -18,7 +18,6 @@ class MusicForm(forms.ModelForm) :
         self.fields['singer'].label = '가수'
         self.fields['year'].label = '발매 연도'
         self.fields['genre'].label = '장르'
-        print(Genre.objects.all().only('id', 'name'))
         self.fields['genre'].choices = [(g.id, g.name) for g in Genre.objects.all()]
 
 class GenreForm(forms.ModelForm) :
