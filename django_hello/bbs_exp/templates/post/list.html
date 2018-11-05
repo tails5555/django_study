@@ -29,7 +29,7 @@
     </thead>
     <tbody>
       {% for post in posts %}
-        <tr data-url="/post/view?id={{ post.id }}">
+        <tr data-url="/post/view/{{ post.id }}">
           <td>{{ post.id }}</td>
           <td>{{ post.title }}</td>
           <td>{{ post.type.name }}</td>

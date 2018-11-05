@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <style>
+    div#info span:nth-child(odd) { color: #aaa; }
+    div#info span:nth-child(even) { margin-right: 40px; }
+    div#bbs_view { min-height: 500px; }
+    div#buttons { min-height: 100px; }
+  </style>
+  <title>게시글 조회</title>
+</head>
+<body>
+<div class="container">
+  <h1>{{ view.post.title }}</h1>
+  <hr />
+  
+  <h3>{{ view.post.type.name }}</h3>
+  <hr />
+
+  <div id="info">  
+    <span>게시글 NO</span>
+    <span>{{ view.post.id }}</span>
+
+    <span>제목 :</span>
+    <span>{{ view.post.title }}</span>
+  </div>
+  <hr />
+  {% autoescape off %}
+  <div id="bbs_view">{{view.wysiwyg_field}}</div>
+  {% endautoescape %}
+  <hr />  
+  <div id="buttons">
+    <a class="btn btn-primary" href="../edit/{{view.post.id}}">
+      <i class="glyphicon glyphicon-pencil"></i> 수정</a>
+    <a class="btn btn-default" href="../list">
+      <i class="glyphicon glyphicon-list"></i> 목록으로</a>
+  </div>
+</div>
+</body>
+</html>

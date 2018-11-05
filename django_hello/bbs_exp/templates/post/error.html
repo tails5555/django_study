@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/common.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <style>
+    div#info span:nth-child(odd) { color: #aaa; }
+    div#info span:nth-child(even) { margin-right: 40px; }
+    div#bbs_view { min-height: 500px; }
+    div#buttons { min-height: 100px; }
+  </style>
+  <title>404 Error</title>
+</head>
+<body>
+  <div class="container">
+    <h1 style="color : red">잘못 된 요청입니다.</h1>
+    <hr/>
+    <a class="btn btn-default" href="/post/list">
+      <i class="glyphicon glyphicon-list"></i> 목록으로</a>
+  </div>
+</body>
+</html>

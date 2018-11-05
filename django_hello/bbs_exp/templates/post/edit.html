@@ -34,7 +34,7 @@
         <button type="submit" class="btn btn-primary">
           <span class="glyphicon glyphicon-ok"></span> 저장</button>
         {% if message == '수정' %}
-          <a href="/post/delete?id={{id}}" class="btn btn-danger" data-confirm-delete>
+          <a href="/post/delete/{{id}}" class="btn btn-danger" data-confirm-delete>
             <i class="glyphicon glyphicon-remove"></i> 삭제</a>
         {% endif %}
         <a href="/post/list" class="btn btn-info"><i class="glyphicon glyphicon-arrow-left"></i> 게시글 목록으로</a>

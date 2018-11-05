@@ -20,7 +20,10 @@ def post_create(request) :
         wysiwyg_form = WysiwygForm(request.POST)
 
         if post_form.is_valid() and wysiwyg_form.is_valid() :
-            post_form.save()
+            post = post_form.save()
+            wysiwyg = wysiwyg_form.save(commit = False)
+            wysiwyg.post = post
+            wysiwyg.save()
             return redirect('post_list')
 
     else :
@@ -29,15 +32,60 @@ def post_create(request) :
 
     return render(request, 'post/edit.html', {'post_form' : post_form, 'wysiwyg_form' : wysiwyg_form, 'message' : '등록'})
 
-def post_update(request) :
-    post_id = int(request.GET.get('id'))
-    tmp_post = Post.objects.get(pk=post_id)
-    post_form = PostForm(request.POST or None, instance=tmp_post)
-    wysiwyg_form = WysiwygForm(request.POST or None, instance=tmp_post.context)
+def post_view(request, id) :
+    if id != 0 :
+        post = Post.objects.filter(id=id).first()
+        if post != None :
+            wysiwyg = Wysiwyg.objects.get(post = post)
+            return render(request, 'post/view.html', {'view' : wysiwyg })
+        else :
+            return render(request, 'post/error.html')
+    
+    else :
+        return render(request, 'post/error.html')
 
-    if post_form.is_valid() and wysiwyg_form.is_valid() :
-        wysiwyg_form.save()
-        post_form.save()
-        return redirect('post_list')
+def post_update(request, id) :
+    if id != 0 :
+        tmp_post = Post.objects.filter(id=id).first()
 
-    return render(request, 'post/edit.html', {'post_form' : post_form, 'wysiwyg_form' : wysiwyg_form, 'message' : '수정', 'id' : post_id})
+        if tmp_post != None :
+            tmp_wysiwyg = Wysiwyg.objects.get(post=tmp_post)
+            
+            if tmp_wysiwyg != None :
+                post_form = PostForm(request.POST or None, instance=tmp_post)
+                wysiwyg_form = WysiwygForm(request.POST or None, instance=tmp_wysiwyg)
+
+                if post_form.is_valid() and wysiwyg_form.is_valid() :
+                    post = post_form.save()
+                    wysiwyg = wysiwyg_form.save(commit = False)
+                    wysiwyg.post = post
+                    wysiwyg.save()
+                    return redirect('post_list')
+
+            else :
+                return render(request, 'post/error.html')
+
+        else :
+            return render(request, 'post/error.html')
+
+        return render(request, 'post/edit.html', {'post_form' : post_form, 'wysiwyg_form' : wysiwyg_form, 'message' : '수정', 'id' : id})
+
+    else :
+        return render(request, 'post/error.html')
+
+def post_delete(request, id) :
+    if id != 0 :
+        tmp_post = Post.objects.filter(id=id).first()
+
+        if tmp_post != None :
+            Post.objects.filter(pk=id).delete()
+            return redirect('post_list')
+    
+        else :
+            post_form = PostForm()
+            wysiwyg_form = WysiwygForm()
+
+        return render(request, 'post/edit.html', {'post_form' : post_form, 'wysiwyg_form' : wysiwyg_form, 'message' : '수정'})
+
+    else :
+        return render(request, 'post/error.html')

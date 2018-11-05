@@ -17,15 +17,6 @@ class Wysiwyg(summer_model.Attachment) :
     wysiwyg_field = summer_fields.SummernoteTextField(default='')
     post = models.OneToOneField(Post, on_delete=models.CASCADE, default=None)
 
-@receiver(post_save, sender=Post)
-def create_wysiwyg_with_post(sender, instance, created, **kwargs):
-    if created :
-        Wysiwyg.objects.create(post=instance)
-
-@receiver(post_save, sender=Post)
-def save_wysiwyg_with_post(sender, instance, **kwargs):
-    instance.wysiwyg.save()
-
 class Image(models.Model) :
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
