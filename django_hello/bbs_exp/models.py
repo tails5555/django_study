@@ -12,6 +12,7 @@ class Post(models.Model) :
     id = models.AutoField(primary_key=True)
     type = models.ForeignKey(Type, on_delete=models.CASCADE, default=None)
     title = models.CharField(max_length=100, default='Non Title')
+    writer = models.CharField(max_length=15, default='Writer')
 
 class Wysiwyg(summer_model.Attachment) :
     wysiwyg_field = summer_fields.SummernoteTextField(default='')
