@@ -18,6 +18,17 @@
   <title>게시글 조회</title>
 </head>
 <body>
+<div style="margin-left : 10px; margin-top : 10px; margin-bottom : 10px;">
+    <ul class="nav nav-pills">
+        {% for type in types %}
+        {% if request.GET.type == type.id|stringformat:'i' %}
+            <li role="presentation" class="active"><a href="/post/type/list?type={{type.id}}&pg=1">{{ type.name }}</a></li>
+        {% else %}
+            <li role="presentation"><a href="/post/type/list?type={{type.id}}&pg=1">{{ type.name }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
 <div class="container">
   <h1>{{ view.post.title }}</h1>
   <hr />

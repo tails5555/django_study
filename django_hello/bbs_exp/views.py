@@ -114,24 +114,6 @@ def type_list(request) :
     else :
         return render(request, 'type/list.html', { 'posts' : [], 'types' : types, 'query' : request.GET.urlencode() })
 
-def post_create(request) :
-    if request.method == "POST":
-        post_form = PostForm(request.POST)
-        wysiwyg_form = WysiwygForm(request.POST)
-
-        if post_form.is_valid() and wysiwyg_form.is_valid() :
-            post = post_form.save()
-            wysiwyg = wysiwyg_form.save(commit = False)
-            wysiwyg.post = post
-            wysiwyg.save()
-            return redirect('type_list')
-
-    else :
-        post_form = PostForm()
-        wysiwyg_form = WysiwygForm()
-
-    return render(request, 'type/edit.html', {'post_form' : post_form, 'wysiwyg_form' : wysiwyg_form, 'message' : '등록'})
-
 def type_view(request) :
     types = Type.objects.all()
     post_id = int(request.GET.get('id'))
@@ -145,7 +127,7 @@ def type_view(request) :
 
         if post != None :
             wysiwyg = Wysiwyg.objects.get(post = post)
-            return render(request, 'type/view.html', { 'view' : wysiwyg, 'query' : request.GET.urlencode() })
+            return render(request, 'type/view.html', { 'view' : wysiwyg, 'query' : request.GET.urlencode(), 'types' : types })
         else :
             return render(request, 'error.html')
     
