@@ -11,9 +11,9 @@ class PostForm(forms.ModelForm) :
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         for key in ('type', 'title', 'writer'):
-               self.fields[key].widget.attrs.update({
-                    'class': 'form-control w200'
-                })
+            self.fields[key].widget.attrs.update({
+                'class': 'form-control w200'
+            })
 
         self.fields['type'].label = '게시판 종류'
         self.fields['type'].choices = [(t.id, t.name) for t in Type.objects.all()]

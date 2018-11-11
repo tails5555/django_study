@@ -17,8 +17,3 @@ class Post(models.Model) :
 class Wysiwyg(summer_model.Attachment) :
     wysiwyg_field = summer_fields.SummernoteTextField(default='')
     post = models.OneToOneField(Post, on_delete=models.CASCADE, default=None)
-
-class Image(models.Model) :
-    id = models.AutoField(primary_key=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
-    img_file = models.ImageField(upload_to='file/image', blank=True, default='file/image/default_image.jpg')
