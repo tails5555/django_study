@@ -27,7 +27,6 @@
 <div class="container">
   <h1>게시글 목록</h1>
   <div class="text-right mb5">
-    <a href="/post/create" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> 게시글 등록</a>
     <a href="/post" class="btn btn-warning"><i class="glyphicon glyphicon-home"></i> 맨 처음으로</a>
   </div>
   <hr/>    
@@ -51,6 +50,25 @@
       {% endfor %}
     </tbody>
   </table>
+  <div class="pagination">
+  <span class="step-links">
+    {% if start != 0 %}
+      <a id="paginLeft" href="?type={{ request.GET.type }}&pg={{ start }}">이전</a>
+    {% endif %}
+
+    {% for p in middle %}
+        {% if p == request.GET.type %}
+            <a class="active" href="?type={{ request.GET.type }}&pg={{ p }}">{{ p }}</a>
+        {% else %}
+            <a href="?type={{ request.GET.type }}&pg={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if end <= total %}
+      <a id="paginRight" href="?type={{ request.GET.type }}&pg={{ end }}">다음</a>
+    {% endif %}
+  </span>
+</div>
 </div>
 </body>
 </html>

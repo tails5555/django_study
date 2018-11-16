@@ -99,17 +99,26 @@ def type_list(request) :
 
     if tmp_type != None :
         post_list = Post.objects.filter(type=tmp_type).order_by('-id')
-        paginator = Paginator(post_list, 8)
+        paginator = Paginator(post_list, 1)
         pg = request.GET.get('pg')
+        totalPageCount = paginator.num_pages
         
         try:
             posts = paginator.page(pg)
         except PageNotAnInteger:
-            posts = paginator.page(1)
+            posts = paginator.page(8)
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
 
-        return render(request, 'type/list.html', { 'posts' : posts, 'types' : types, 'query' : request.GET.urlencode() })
+        startPageNum = (( int(pg) - 1 ) // 10 ) * 10
+        endPageNum = startPageNum + 11
+
+        if endPageNum > totalPageCount :
+            endPageNum = totalPageCount + 1
+        
+        bottomPages = range(startPageNum + 1, endPageNum)
+
+        return render(request, 'type/list.html', { 'posts' : posts, 'types' : types, 'query' : request.GET.urlencode(), 'start' : startPageNum, 'end' : endPageNum, 'middle' : bottomPages, 'total' : totalPageCount })
 
     else :
         return render(request, 'type/list.html', { 'posts' : [], 'types' : types, 'query' : request.GET.urlencode() })
