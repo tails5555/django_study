@@ -92,21 +92,44 @@ def post_delete(request, id) :
     else :
         return render(request, 'error.html')
 
-def type_list(request) :
+def type_list(request, **kwargs) :
     types = Type.objects.all()
     type_id = int(request.GET.get('type'))
     tmp_type = Type.objects.filter(id=type_id).first()
 
     if tmp_type != None :
-        post_list = Post.objects.filter(type=tmp_type).order_by('-id')
-        paginator = Paginator(post_list, 1)
         pg = request.GET.get('pg')
+        st = request.GET.get('st')
+        sb = request.GET.get('sb')
+        ob = request.GET.get('ob')
+
+        if sb == '1' :
+            post_list = Post.objects.filter(type=tmp_type, title__icontains=st)
+        elif sb == '2' :
+            post_list = Post.objects.filter(type=tmp_type, writer=st)
+        elif sb == '3' :
+            post_list = Post.objects.filter(type=tmp_type, title__icontains=st, context__icontains=st)
+        else :
+            post_list = Post.objects.filter(type=tmp_type)
+
+        if ob == '0' or ob == '1' :
+            post_list = post_list.order_by('-id')
+        elif ob == '2' :
+            post_list = post_list.order_by('id')
+        elif ob == '3' :
+            post_list = post_list.order_by('title')
+        elif ob == '4' :
+            post_list = post_list.order_by('-title')
+        else :
+            post_list = post_list
+
+        paginator = Paginator(post_list, 8)
         totalPageCount = paginator.num_pages
         
         try:
             posts = paginator.page(pg)
         except PageNotAnInteger:
-            posts = paginator.page(8)
+            posts = paginator.page(1)
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
 
@@ -118,7 +141,10 @@ def type_list(request) :
         
         bottomPages = range(startPageNum + 1, endPageNum)
 
-        return render(request, 'type/list.html', { 'posts' : posts, 'types' : types, 'query' : request.GET.urlencode(), 'start' : startPageNum, 'end' : endPageNum, 'middle' : bottomPages, 'total' : totalPageCount })
+        page_query = request.GET.copy()
+        del page_query['pg']
+
+        return render(request, 'type/list.html', { 'posts' : posts, 'types' : types, 'query' : request.GET.urlencode(), 'page_query' : page_query.urlencode(), 'start' : startPageNum, 'end' : endPageNum, 'middle' : bottomPages, 'total' : totalPageCount })
 
     else :
         return render(request, 'type/list.html', { 'posts' : [], 'types' : types, 'query' : request.GET.urlencode() })
