@@ -12,4 +12,10 @@ class Account(models.Model) :
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=100, default='City Address')
     birthday = models.DateField(default=timezone.now())
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, default=None)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, null=True)
+
+@receiver(post_save, sender=User)
+def save_user_account(sender, instance, created, **kwargs):
+    if created :
+        if sender.__name__ == 'User' :
+            Account.objects.create(user=instance)
