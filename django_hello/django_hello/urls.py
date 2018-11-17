@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('music/', include('music_example.urls')),
     url(r'^post/', include('bbs_exp.urls')),
-    url(r'^summernote/', include('django_summernote.urls'))
+    url(r'^summernote/', include('django_summernote.urls')),
+    url(r'^account/', include('login_example.urls'))
 ]

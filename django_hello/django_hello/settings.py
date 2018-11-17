@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_summernote',
     'music_example.apps.MusicExampleConfig',
-    'bbs_exp.apps.BbsExpConfig'
+    'bbs_exp.apps.BbsExpConfig',
+    'login_example.apps.LoginExampleConfig'
 ]
 
 MIDDLEWARE = [
